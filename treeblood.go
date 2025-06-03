@@ -315,11 +315,11 @@ func (e *mathMLExtension) Extend(m goldmark.Markdown) {
 	)
 }
 
-// TODO implement SetMacros over on TreeBlood
-//func (e *mathMLExtension) WithMacros(macros map[string]string) *mathMLExtension {
-//	e.pitz.SetMacros(macros)
-//	return e
-//}
+// Macros to be precompiled for the document
+func (e *mathMLExtension) WithMacros(macros map[string]string) *mathMLExtension {
+	e.pitz.AddMacros(macros)
+	return e
+}
 
 func (e *mathMLExtension) WithNumbering() *mathMLExtension {
 	e.pitz.DoNumbering = true
