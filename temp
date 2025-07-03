@@ -1,29 +1,6 @@
-package treeblood
-
-import (
-	"bytes"
-	"fmt"
-	"strings"
-	"testing"
-
-	"github.com/yuin/goldmark"
-)
-
-func TestTreeBlood(t *testing.T) {
-	markdown := goldmark.New(
-		goldmark.WithExtensions(MathML()),
-	)
-	var buffer bytes.Buffer
-	if err := markdown.Convert([]byte(`
-Math Test
-=========
-$$\int_0^1 x^{-x} dx = \sum_{n=1}^\infty n^{-n}$$
-	`), &buffer); err != nil {
-		t.Fatal(err)
-	}
-	if strings.TrimSpace(buffer.String()) != strings.TrimSpace(`<h1>Math Test</h1>
+<h1>Math Test</h1>
 <p>
-<math class="math-displaystyle" displaystyle="true" style="font-feature-settings: 'dtls' off;" xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<math display="block" class="math-displaystyle" displaystyle="true" style="font-feature-settings: 'dtls' off;" xmlns="http://www.w3.org/1998/Math/MathML">
   <semantics>
     <mrow>
       <msubsup>
@@ -61,8 +38,10 @@ $$\int_0^1 x^{-x} dx = \sum_{n=1}^\infty n^{-n}$$
     <annotation encoding="application/x-tex">\int_0^1 x^{-x} dx = \sum_{n=1}^\infty n^{-n}</annotation>
   </semantics>
 </math>
-</p>`) {
-		t.Error("failed to render MathML")
-		fmt.Println(buffer.String())
-	}
-}
+</p>
+
+--- FAIL: TestTreeBlood (0.00s)
+    treeblood_test.go:66: failed to render MathML
+FAIL
+FAIL	github.com/wyatt915/goldmark-treeblood	0.002s
+FAIL
